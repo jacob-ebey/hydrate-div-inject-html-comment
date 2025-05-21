@@ -27,6 +27,8 @@ export const links: Route.LinksFunction = () => [
 function SharedLayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
+      <Meta />
+      <Links />
       <ul>
         <li>
           <Link to="/">Home</Link>
@@ -36,6 +38,8 @@ function SharedLayout({ children }: { children: React.ReactNode }) {
         </li>
       </ul>
       {children}
+      <ScrollRestoration />
+      <Scripts />
     </div>
   );
 }
@@ -51,15 +55,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
       </head>
       <body>
         <div id="root">
           <SharedLayout>{children}</SharedLayout>
         </div>
-        <ScrollRestoration />
-        <Scripts />
       </body>
     </html>
   );
