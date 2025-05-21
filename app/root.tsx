@@ -44,6 +44,7 @@ function SharedLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
+// This component doesn't hydrate. Keep that in mind and don't render anything that needs client side interactivity.
 export function Layout({ children }: { children: React.ReactNode }) {
   // Don't render the document in the browser, we are targeting the <div id="root"> element fro hydration.
   if (typeof document !== "undefined") {
