@@ -24,7 +24,8 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-function SharedLayout({ children }: { children: React.ReactNode }) {
+// I hydrate the app in the browser and am your "root" for the app.
+function HydratedLayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Meta />
@@ -48,7 +49,7 @@ function SharedLayout({ children }: { children: React.ReactNode }) {
 export function Layout({ children }: { children: React.ReactNode }) {
   // Don't render the document in the browser, we are targeting the <div id="root"> element fro hydration.
   if (typeof document !== "undefined") {
-    return <SharedLayout>{children}</SharedLayout>;
+    return <HydratedLayout>{children}</HydratedLayout>;
   }
 
   return (
@@ -59,7 +60,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <div id="root">
-          <SharedLayout>{children}</SharedLayout>
+          <HydratedLayout>{children}</HydratedLayout>
         </div>
       </body>
     </html>
