@@ -1,5 +1,6 @@
 import {
   isRouteErrorResponse,
+  Link,
   Links,
   Meta,
   Outlet,
@@ -23,7 +24,28 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+function SharedLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+      </ul>
+      {children}
+    </div>
+  );
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  // Don't render the document in the browser, we are targeting the <div id="root"> element fro hydration.
+  if (typeof document !== "undefined") {
+    return <SharedLayout>{children}</SharedLayout>;
+  }
+
   return (
     <html lang="en">
       <head>
@@ -33,7 +55,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div id="root">
+          <SharedLayout>{children}</SharedLayout>
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
